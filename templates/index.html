@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Land | Mine</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+	<input type="text" class="data" placeholder="add item name">
+	<button class="add-btn">+&nbsp;Add</button>
+	<div class="my-list"></div>
+	<script>
+		$(document).ready(function(){
+			
+			$(".add-btn").click(function(){
+
+				var data = $(".data").val();
+
+				if(data.length > 0){
+
+					if($(".data").attr("edit") === "true"){
+						
+						var _id = $(".data").attr("edit-id");
+						$("#"+_id).children(".e-data").text(data);
+
+						var new_id = data.split(" ").join("-");
+						$(".data").attr("edit", false);
+						$("#"+_id).attr("id", new_id);
+
+					} else{
+
+						var _id = data.split(" ").join("-");
+					
+						$(".my-list").append("<div id='"+_id+"'><span class='e-data'>"+data+"</span><span class='edit-btn'>&nbsp;&nbsp;Edit</span></div>");
+
+						$(".edit-btn").off("click");
+						$(".edit-btn").click(function(){
+							$(".data").val($(this).siblings(".e-data").text());
+							$(".data").attr("edit", true);
+							$(".data").attr("edit-id", $(this).parent().attr("id"));
+						});
+					};
+
+					$(".data").val("");
+				}
+			});
+		});
+	</script>
+</body>
+</html>
